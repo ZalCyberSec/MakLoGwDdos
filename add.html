@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIMROSEX TECH - Add User</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500,700&family=Poppins:wght@300,400,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --purple-1:#6b21a8;
+  --purple-2:#8b5cf6;
+  --accent:#8b5cf6;
+  --glass:rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(180deg,#0f172a 0%,#0b1220 100%);
+  color:#e6e6f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;background:transparent;}
+
+.container{
+  position:relative;z-index:2;width:90%;max-width:480px;margin:20px;padding:24px;border-radius:20px;
+  background:var(--glass);backdrop-filter:blur(6px) saturate(120%);
+  box-shadow:0 10px 35px rgba(11,12,30,0.6);text-align:center;transition:all .3s;
+  border:1px solid rgba(139,92,246,0.06);
+  overflow:hidden;
+}
+.container::before{
+  content:"";position:absolute;width:200%;height:200%;left:-50%;top:-50%;opacity:.04;pointer-events:none;
+  background:conic-gradient(from 0deg,var(--purple-1),var(--purple-2),var(--purple-1));
+  animation:spin 16s linear infinite;border-radius:30%;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg);} }
+
+.media{
+  display:inline-block;width:100%;border-radius:12px;overflow:hidden;background:transparent;margin-bottom:12px;
+}
+.media video{display:block;width:100%;height:auto;border-radius:12px;filter:saturate(110%) contrast(1.02);}
+
+.brand{
+  font-family:'Orbitron',sans-serif;font-size:22px;color:var(--purple-2);margin:12px 0;font-weight:700;
+}
+
+.input-group{margin:10px 0;display:flex;align-items:center;gap:6px;}
+.input-group label{width:36px;display:flex;align-items:center;justify-content:center;color:var(--purple-2);font-size:18px;}
+.input-group input,.input-group select{
+  flex:1;padding:12px 12px;border-radius:10px;background:rgba(14,8,23,0.32);border:1px solid rgba(139,92,246,0.12);
+  color:#eae6ff;font-size:15px;outline:none;transition:box-shadow .14s,border-color .14s;
+}
+.input-group input:focus,.input-group select:focus{border-color:var(--purple-2);box-shadow:0 6px 20px rgba(139,92,246,0.06);}
+
+.btn{
+  display:inline-block;padding:12px 20px;margin:12px auto;border-radius:10px;
+  background:linear-gradient(90deg,var(--purple-1),var(--purple-2));
+  color:#fff;font-weight:700;font-size:16px;border:0;cursor:pointer;
+  box-shadow:0 8px 24px rgba(107,33,168,0.18);transition:transform .12s,box-shadow .12s;text-align:center;white-space:nowrap;width:100%;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(107,33,168,0.22);}
+.btn:disabled{background:rgba(120,120,120,0.3);cursor:not-allowed;}
+
+.status-line{margin-top:12px;font-size:14px;color:rgba(230,230,240,0.9);min-height:18px;}
+.status-line .err{color:var(--accent);font-weight:700;}
+.status-line .ok{color:#a7ffb3;font-weight:700;}
+
+.toast{position:fixed;right:18px;top:18px;z-index:9999;background:linear-gradient(180deg,rgba(24,6,36,0.95),rgba(9,3,18,0.9));
+color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.6);border-left:4px solid var(--accent);opacity:0;transform:translateY(-8px);transition:opacity .18s,transform .18s;font-weight:600;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* Bottom navigation */
+.bottom-nav-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:60}
+.bottom-nav{
+  display:flex;gap:18px;padding:10px 18px;border-radius:40px;
+  background:linear-gradient(90deg,var(--purple-1),var(--purple-2));
+  box-shadow:0 8px 30px rgba(99, 102, 241, 0.18);backdrop-filter: blur(6px);
+  border:1px solid rgba(255,255,255,0.04);align-items:center;
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:72px;padding:8px 10px;border-radius:12px;
+  color:rgba(255,255,255,0.92);text-decoration:none;transition:all .18s ease;cursor:pointer;font-size:13px;
+}
+.nav-item .icon{font-size:20px;margin-bottom:6px;filter:drop-shadow(0 4px 12px rgba(139,92,246,0.28));}
+.nav-item .label{line-height:1;letter-spacing:0.2px}
+.nav-item:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(11,22,40,0.35)}
+.nav-item.active{
+  background:linear-gradient(180deg,rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  color: white;
+  box-shadow:0 8px 28px rgba(111,66,193,0.26), inset 0 -2px 10px rgba(255,255,255,0.02);
+  transform:translateY(-6px) scale(1.03);
+}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+
+<div class="container">
+  <div class="media">
+    <video src="https://files.catbox.moe/kl2dh1.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <h2 class="brand"><i class="fa-solid fa-user-plus"></i> ADD USER</h2>
+
+  <div class="input-group">
+    <label><i class="fa-solid fa-user"></i></label>
+    <input type="text" id="username" placeholder="Username baru...">
+  </div>
+  <div class="input-group">
+    <label><i class="fa-solid fa-lock"></i></label>
+    <input type="password" id="password" placeholder="Password baru...">
+  </div>
+  <div class="input-group">
+    <label><i class="fa-solid fa-id-badge"></i></label>
+    <select id="roleSelect"></select>
+  </div>
+
+  <button class="btn" id="btnAdd"><i class="fa-solid fa-plus"></i> Tambah User</button>
+  <div id="status" class="status-line"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div class="bottom-nav-wrap" role="navigation" aria-label="Bottom primary navigation">
+  <nav class="bottom-nav">
+  <a class="nav-item" href="ddos.html" id="navResult">
+      <i class="fa-solid fa-bolt icon"></i>
+      <span class="label"><b>DDoS</b></span>
+    </a>
+  <a class="nav-item" href="server.html" id="navServer">
+      <i class="fa-solid fa-server icon"></i>
+      <span class="label"><b>Server</b></span>
+    </a>
+    <a class="nav-item" href="log.html" id="navResult">
+      <i class="fa-solid fa-chart-line icon"></i>
+      <span class="label"><b>Result</b></span>
+    </a>    
+    <a class="nav-item active" href="add.html" id="navHome">
+      <i class="fa-solid fa-plus icon"></i>
+      <span class="label"><b>Add</b></span>
+    </a>
+    <a class="nav-item" href="about.html" id="navAbout">
+      <i class="fa-solid fa-circle-info icon"></i>
+      <span class="label"><b>Info</b></span>
+    </a>    
+    </a>
+  </nav>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/jnicol/particleground/jquery.particleground.min.js"></script>
+<script>
+try{
+  particleground(document.getElementById('particles'),{
+    dotColor:'#8b5cf6',
+    lineColor:'#6b21a8',
+    minSpeedX:0.02,
+    maxSpeedX:0.35,
+    minSpeedY:0.01,
+    maxSpeedY:0.20,
+    density:9000,
+    particleRadius:3,
+    proximity:120
+  });
+}catch(e){}
+
+function showToast(msg,ms=2200){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),ms);
+}
+
+const currentUser={username:'reseller1',role:'reseller'};
+
+function canAddRole(byRole,targetRole){
+  if(byRole==='developer') return true;
+  if(byRole==='owner') return ['user','reseller'].includes(targetRole);
+  if(byRole==='reseller') return targetRole==='user';
+  return false;
+}
+
+function setRoleOptions(){
+  const sel=document.getElementById('roleSelect');
+  sel.innerHTML='';
+  let roles=[];
+  if(currentUser.role==='developer') roles=['user','reseller','owner'];
+  else if(currentUser.role==='owner') roles=['user','reseller'];
+  else if(currentUser.role==='reseller') roles=['user'];
+  roles.forEach(r=>{
+    const o=document.createElement('option');
+    o.value=r;
+    o.textContent=r.charAt(0).toUpperCase()+r.slice(1);
+    sel.appendChild(o);
+  });
+}
+setRoleOptions();
+
+$("#btnAdd").click(async ()=>{
+  const uname=$("#username").val().trim();
+  const pass=$("#password").val().trim();
+  const role=$("#roleSelect").val();
+  if(!uname||!pass||!role){showToast("Isi semua kolom dulu!"); return;}
+
+  if(!canAddRole(currentUser.role,role)){
+    showToast("Role kamu ("+currentUser.role+") ga boleh nambah "+role);
+    $("#status").html('<span class="err">Gagal: Role tidak diizinkan!</span>');
+    return;
+  }
+
+  $("#status").text("Mengirim data ke server...");
+  try{
+    const deviceId=localStorage.getItem("prim_deviceId")||crypto.randomUUID();
+    localStorage.setItem("prim_deviceId",deviceId);
+    const ipResp=await fetch("https://api.ipify.org?format=json").then(r=>r.json()).catch(()=>({ip:"unknown"}));
+    const payload={username:uname,password:pass,role:role,addedBy:currentUser.username,deviceId:deviceId,ip:ipResp.ip,timestamp:new Date()};
+
+    // fetch ke backend API
+    const res=await fetch("http://malllzpanelprivate.kibiljoe.engineer/addUser",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    const data=await res.json();
+    if(data.success){
+      showToast("User berhasil ditambahkan ✅");
+      $("#status").html('<span class="ok">User berhasil ditambahkan!</span>');
+      $("#username").val("");$("#password").val("");
+    }else{
+      showToast("Gagal: "+(data.message||"Unknown error"));
+      $("#status").html('<span class="err">Gagal: '+(data.message||"Unknown error")+'</span>');
+    }
+  }catch(e){
+    showToast("Error: "+e.message);
+    $("#status").html('<span class="err">Error: '+e.message+'</span>');
+  }
+});
+</script>
+</body>
+</html>

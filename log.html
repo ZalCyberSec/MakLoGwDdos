@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PRIMROSEX TECH</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500,700&family=Poppins:wght@300,400,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --purple-1:#6b21a8;
+  --purple-2:#8b5cf6;
+  --glass:rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#0f172a 0%,#0b1220 100%);
+  color:#e6e6f0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding-bottom:90px;
+  overflow:hidden;
+}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;background:transparent;}
+
+.container{
+  margin-top:30px;
+  width:90%;
+  max-width:700px;
+  border-radius:20px;
+  background:var(--glass);
+  backdrop-filter:blur(8px) saturate(130%);
+  box-shadow:0 10px 35px rgba(11,12,30,0.6);
+  padding:24px;
+  position:relative;
+  z-index:1;
+}
+.media video{
+  width:100%;
+  border-radius:14px;
+  margin-bottom:16px;
+}
+.brand{
+  font-family:'Orbitron',sans-serif;
+  color:var(--purple-2);
+  font-size:22px;
+  text-align:center;
+  margin-bottom:20px;
+  font-weight:700;
+}
+.log-box{
+  background:rgba(20,10,35,0.5);
+  border:1px solid rgba(139,92,246,0.15);
+  border-radius:12px;
+  padding:12px;
+  color:#dcdcff;
+  font-family:'Courier New',monospace;
+  font-size:14px;
+  height:280px;
+  overflow-y:auto;
+  box-shadow:inset 0 0 20px rgba(0,0,0,0.3);
+}
+.btn{
+  display:block;
+  width:100%;
+  margin-top:16px;
+  padding:12px 16px;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  color:#fff;
+  background:linear-gradient(90deg,var(--purple-1),var(--purple-2));
+  box-shadow:0 8px 24px rgba(107,33,168,0.2);
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.btn:hover{transform:translateY(-3px);}
+.bottom-nav-wrap{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:18px;
+  z-index:2;
+}
+.bottom-nav{
+  display:flex;
+  gap:18px;
+  padding:10px 18px;
+  border-radius:40px;
+  background:linear-gradient(90deg,var(--purple-1),var(--purple-2));
+  box-shadow:0 8px 30px rgba(99,102,241,0.18);
+  backdrop-filter:blur(6px);
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-width:72px;padding:8px 10px;border-radius:12px;
+  color:#fff;text-decoration:none;font-size:13px;transition:0.2s;
+}
+.nav-item .icon{font-size:20px;margin-bottom:6px;}
+.nav-item.active{
+  background:rgba(255,255,255,0.08);
+  transform:translateY(-6px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+
+<div class="container">
+  <div class="media">
+    <video src="https://files.catbox.moe/kl2dh1.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <h2 class="brand"><i class="fa-solid fa-chart-line"></i> RESULT LOG</h2>
+
+  <div class="log-box" id="logBox">
+    [00:00] Menunggu data...
+  </div>
+
+  <button class="btn" id="btnRefresh"><i class="fa-solid fa-rotate-right"></i> Refresh Log</button>
+</div>
+
+<div class="bottom-nav-wrap">
+  <nav class="bottom-nav">
+    <a class="nav-item" href="ddos.html"><i class="fa-solid fa-bolt icon"></i><span class="label">DDoS</span></a>
+    <a class="nav-item" href="server.html"><i class="fa-solid fa-server icon"></i><span class="label">Server</span></a>
+    <a class="nav-item active" href="log.html"><i class="fa-solid fa-chart-line icon"></i><span class="label">Result</span></a>
+    <a class="nav-item" href="add.html" id="navResult">
+      <i class="fa-solid fa-plus icon"></i>
+      <span class="label"><b>Add</b></span>
+    </a>
+    <a class="nav-item" href="about.html"><i class="fa-solid fa-circle-info icon"></i><span class="label">Info</span></a>    
+  </nav>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/jnicol/particleground/jquery.particleground.min.js"></script>
+<script>
+// Ambil username saat login, simpan di localStorage (atau dapat dari session)
+const currentUser = JSON.parse(localStorage.getItem('prim_currentUser') || '{"username":"guest"}');
+
+const API_URL = "http://malllzpanelprivate.kibiljoe.engineer/getResults"; // ganti backend lo
+
+// init particleground
+try {
+  particleground(document.getElementById('particles'), {
+    dotColor: '#8b5cf6',
+    lineColor: '#6b21a8',
+    minSpeedX: 0.02,
+    maxSpeedX: 0.35,
+    minSpeedY: 0.01,
+    maxSpeedY: 0.2,
+    density: 8000,
+    particleRadius: 3,
+    proximity: 120
+  });
+} catch(e){ console.warn('Particleground init error', e); }
+
+// Fetch log spesifik user
+async function fetchResults(){
+  try{
+    const res = await fetch(API_URL + "?username=" + encodeURIComponent(currentUser.username));
+    const data = await res.json();
+    const box = document.getElementById('logBox');
+    box.innerHTML = "";
+    data.forEach((item)=>{
+      const line = `[${item.timestamp}] Username: ${item.username} | Role: ${item.role} | Status: ${item.status}`;
+      box.innerHTML += line + "<br>";
+    });
+    box.scrollTop = box.scrollHeight;
+  }catch(e){
+    const box = document.getElementById('logBox');
+    box.innerHTML += `[${new Date().toLocaleTimeString()}] Error fetching results: ${e.message}<br>`;
+    box.scrollTop = box.scrollHeight;
+  }
+}
+
+document.getElementById('btnRefresh').addEventListener('click', fetchResults);
+fetchResults();
+</script>
+</body>
+</html>
