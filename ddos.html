@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PRIMROSEX TECH</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500,700&family=Poppins:wght@300,400,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --purple-1:#6b21a8;
+  --purple-2:#8b5cf6;
+  --accent:#8b5cf6;
+  --glass:rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#0f172a 0%, #0b1220 100%);
+  color:#e6e6f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;background:transparent;}
+.container{
+position:relative;z-index:2;width:auto;max-width:680px;margin:20px;padding:24px;border-radius:20px;
+background:var(--glass);backdrop-filter:blur(6px) saturate(120%);
+box-shadow:0 10px 35px rgba(11,12,30,0.6);text-align:center;transition:all .3s;
+border:1px solid rgba(139,92,246,0.06);
+}
+.container::before{
+content:"";position:absolute;width:200%;height:200%;left:-50%;top:-50%;opacity:.04;pointer-events:none;
+background:conic-gradient(from 0deg,var(--purple-1),var(--purple-2),var(--purple-1));
+animation:spin 16s linear infinite;border-radius:30%;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.header{margin-bottom:14px;position:relative;}
+.media{display:inline-block;max-width:100%;border-radius:12px;overflow:hidden;background:transparent;}
+.media video{display:block;width:100%;height:auto;border-radius:12px;filter:saturate(110%) contrast(1.02);}
+.icon-title{font-family:'Orbitron',sans-serif;font-size:22px;color:var(--accent);margin:10px 0 16px;font-weight:700;}
+.input-group{margin:10px 0;display:flex;align-items:center;gap:6px;}
+.input-group label{width:36px;display:flex;align-items:center;justify-content:center;color:var(--purple-2);font-size:18px;}
+.input-group input,.input-group select{
+flex:1;padding:12px 12px;border-radius:10px;background:rgba(14,8,23,0.32);
+border:1px solid rgba(139,92,246,0.12);color:#eae6ff;font-size:15px;outline:none;
+transition:box-shadow .14s,border-color .14s;
+}
+.input-group input:focus,.input-group select:focus{border-color:var(--purple-2);box-shadow:0 6px 20px rgba(139,92,246,0.06);}
+.btn{
+display:inline-block;padding:12px 20px;margin:12px auto;border-radius:10px;
+background:linear-gradient(90deg,var(--purple-1),var(--purple-2));
+color:#fff;font-weight:700;font-size:16px;border:0;cursor:pointer;
+box-shadow:0 8px 24px rgba(107,33,168,0.18);transition:transform .12s,box-shadow .12s;text-align:center;white-space:nowrap;width:100%;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(107,33,168,0.22);}
+.status-line{margin-top:12px;font-size:14px;color:rgba(230,230,240,0.9);min-height:18px;}
+.status-line .err{color:var(--accent);font-weight:700;}
+.status-line .ok{color:#a7ffb3;font-weight:700;}
+.toast{position:fixed;right:18px;top:18px;z-index:9999;background:linear-gradient(180deg,rgba(24,6,36,0.95),rgba(9,3,18,0.9));
+color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.6);
+border-left:4px solid var(--accent);opacity:0;transform:translateY(-8px);
+transition:opacity .18s,transform .18s;font-weight:600;}
+.toast.show{opacity:1;transform:translateY(0);}
+.bottom-nav-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:60}
+.bottom-nav{
+display:flex;gap:18px;padding:10px 18px;border-radius:40px;
+background:linear-gradient(90deg,var(--purple-1),var(--purple-2));
+box-shadow:0 8px 30px rgba(99,102,241,0.18);backdrop-filter:blur(6px);
+border:1px solid rgba(255,255,255,0.04);align-items:center;
+}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;
+min-width:72px;padding:8px 10px;border-radius:12px;color:rgba(255,255,255,0.92);
+text-decoration:none;transition:all .18s ease;cursor:pointer;font-size:13px;}
+.nav-item .icon{font-size:20px;margin-bottom:6px;filter:drop-shadow(0 4px 12px rgba(139,92,246,0.28));}
+.nav-item:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(11,22,40,0.35)}
+.nav-item.active{
+background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
+color:white;box-shadow:0 8px 28px rgba(111,66,193,0.26),inset 0 -2px 10px rgba(255,255,255,0.02);
+transform:translateY(-6px) scale(1.03);
+}
+@media(max-width:420px){.bottom-nav{gap:8px;padding:8px}.nav-item{min-width:60px;font-size:12px}.nav-item .icon{font-size:18px}}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+
+<!-- DASHBOARD -->
+<div class="container dashboard" id="dashboard">
+  <div class="header">
+    <div class="media"><video src="https://files.catbox.moe/kl2dh1.mp4" autoplay muted loop playsinline></video></div>
+  </div>
+  <h2 class="icon-title"><i class="fa-solid fa-crown"></i> PRIMROSEX TECH</h2>
+
+  <div class="input-group">
+    <label><i class="fa-solid fa-link"></i></label>
+    <input type="text" id="linkInput" placeholder="Masukkan Link Target">
+  </div>
+  <div class="input-group">
+    <label><i class="fa-solid fa-gear"></i></label>
+    <select id="methodSelect">
+      <option value="">Pilih Metode</option>
+      <option value="one">Amenotejikara</option>
+      <option value="two">Kagutsuchi</option>
+      <option value="three">Chidori</option>
+      <option value="four">Genjutsu</option>
+      <option value="five">Amaterasu</option>
+      <option value="six">Susano'o</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <label><i class="fa-solid fa-clock"></i></label>
+    <input type="number" id="timeInput" placeholder="Durasi (detik)">
+  </div>
+  <button class="btn" id="btnRun"><i class="fa-solid fa-bolt"></i> Jalankan</button>
+
+  <div id="runStatus" class="status-line">Status: Siap</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav-wrap" role="navigation" aria-label="Bottom primary navigation">
+  <nav class="bottom-nav">
+    <a class="nav-item active" href="ddos.html" id="navHome">
+      <i class="fa-solid fa-bolt icon"></i>
+      <span class="label"><b>DDoS</b></span>
+    </a>    
+    <a class="nav-item" href="server.html" id="navServer">
+      <i class="fa-solid fa-server icon"></i>
+      <span class="label"><b>Server</b></span>
+    </a>
+    <a class="nav-item" href="log.html" id="navResult">
+      <i class="fa-solid fa-chart-line icon"></i>
+      <span class="label"><b>Result</b></span>
+    </a>
+    <a class="nav-item" href="add.html" id="navResult">
+      <i class="fa-solid fa-plus icon"></i>
+      <span class="label"><b>Add</b></span>
+    </a>    
+    <a class="nav-item" href="about.html" id="navAbout">
+      <i class="fa-solid fa-circle-info icon"></i>
+      <span class="label"><b>Info</b></span>
+    </a>    
+    </a>
+  </nav>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/jnicol/particleground/jquery.particleground.min.js"></script>
+<script>
+const BACKEND_URL = "http://malllzpanelprivate.kibiljoe.engineer";
+function showToast(msg,ms=2200){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),ms);}
+document.addEventListener('DOMContentLoaded',function(){
+  try{
+    particleground(document.getElementById('particles'),{
+      dotColor:'#8b5cf6',lineColor:'#6b21a8',minSpeedX:0.02,maxSpeedX:0.35,minSpeedY:0.01,maxSpeedY:0.2,
+      density:9000,particleRadius:3,proximity:120
+    });
+  }catch(e){}
+  const runStatus=document.getElementById('runStatus');
+  document.getElementById('btnRun').addEventListener('click',async()=>{
+    const link=document.getElementById('linkInput').value.trim(),
+          method=document.getElementById('methodSelect').value,
+          time=document.getElementById('timeInput').value.trim();
+
+    if(!link||!method||!time){
+      runStatus.innerHTML='Status: <span class="err">Lengkapi Semua Data!</span>';
+      showToast('Lengkapi Semua Data!');
+      return;
+    }
+
+    runStatus.textContent='Status: Mengirim ke server...';
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ target: link, method, time })
+      });
+
+      if (!res.ok) throw new Error('Gagal Mengirim');
+
+      const data = await res.json();
+      if (data.success) {
+        runStatus.innerHTML = 'Status: <span class="ok">Serangan Dimulai</span>';
+        showToast('Serangan Dimulai!', 2500);
+      } else {
+        runStatus.innerHTML = 'Status: <span class="err">Gagal Memulai</span>';
+        showToast('Gagal Memulai Serangan', 2500);
+      }
+    } catch (err) {
+      runStatus.innerHTML = 'Status: <span class="err">Server Tidak Merespons</span>';
+      showToast('Server Tidak Merespons', 2500);
+    }
+  });
+
+  document.querySelectorAll('.nav-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+});
+</script>
+</body>
+</html>
